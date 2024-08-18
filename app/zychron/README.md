@@ -1,0 +1,1 @@
+A straightforward app for organizing and managing your time efficiently.

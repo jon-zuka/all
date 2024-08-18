@@ -1,0 +1,14 @@
+{
+  "name": "@repo/zychron",
+  "version": "0.0.1-beta.1",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "preview": "vite preview",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "vike-solid": "^0.7.2"
+  }
+}

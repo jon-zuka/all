@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "moduleResolution": "Bundler",
+    "esModuleInterop": true,
+    "types": ["vite/client", "solid-js"],
+    "skipLibCheck": true,
+    "strict": true,
+    "declaration": true,
+    "outDir": "dist",
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@repo/solidjs-ui": ["../../../dist/solidjs-ui"]
+    }
+  },
+  "include": ["pages", "render", "layouts", "components", "composables", "public", "stores"]
+}
