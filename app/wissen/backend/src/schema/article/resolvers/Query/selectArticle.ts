@@ -1,0 +1,2 @@
+import type   { QueryResolvers } from './../../../types.generated';
+        export const selectArticle: NonNullable<QueryResolvers['selectArticle']> = async (_parent, _arg, _ctx) => { /* Implement Query.selectArticle resolver logic here */ };

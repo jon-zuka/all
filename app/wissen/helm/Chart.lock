@@ -1,0 +1,12 @@
+dependencies:
+- name: common
+  repository: file://../../../lib/helm-common
+  version: 0.0.0-alpha
+- name: frontend
+  repository: ""
+  version: '>=0.0.0-alpha'
+- name: backend
+  repository: ""
+  version: '>=0.0.0-alpha'
+digest: sha256:3d77c0b871386a1492b7f1ebaaea5aced01a39fdcfae74c978867cde5b66d55d
+generated: "2024-08-21T23:58:41.593014+02:00"

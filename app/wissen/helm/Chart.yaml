@@ -1,0 +1,15 @@
+apiVersion: v2
+name: wissen
+description: Forum for sharing knowledge
+type: application
+version: 0.0.0-alpha
+dependencies:
+  - name: common
+    version: ">=0.0.0-alpha"
+    repository: "file://../../../lib/helm-common"
+  - name: frontend
+    version: ">=0.0.0-alpha"
+    condition: frontend.enabled
+  - name: backend
+    version: ">=0.0.0-alpha"
+    condition: backend.enabled

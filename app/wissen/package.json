@@ -1,0 +1,9 @@
+{
+  "name": "@repo/wissen",
+  "version": "0.0.0",
+  "private": false,
+  "type": "module",
+  "dependencies": {
+    "@jon-zuka/solidjs-ui": "file:../../lib/solidjs-ui"
+  }
+}

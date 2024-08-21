@@ -5,15 +5,19 @@
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     "types": ["vite/client", "solid-js"],
-    "moduleResolution": "Bundler",
+    "moduleResolution": "Node",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "strict": true,
     "declaration": true,
-    "outDir": "dist",
+    "outDir": "tmp",
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
+    "paths": {
+      "solid-styled-components": ["node_modules/solid-styled-components"],
+      "polished": ["node_modules/polished"]
+    }
   },
   "include": ["src"],
-  "exclude": ["node_modules", "**/*.stories.tsx"]
+  "exclude": ["node_modules", "**/*.stories.tsx", "dist"]
 }

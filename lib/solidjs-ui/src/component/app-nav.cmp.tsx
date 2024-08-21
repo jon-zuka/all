@@ -1,6 +1,6 @@
+import { styled } from "solid-styled-components";
 import { readableColor, rgba } from "polished";
 import { JSX } from "solid-js";
-import { styled } from "solid-styled-components";
 
 const StyledNav = styled("nav")`
   display: flex;
@@ -39,6 +39,6 @@ const StyledNav = styled("nav")`
 `;
 
 interface AppNavProps extends JSX.HTMLAttributes<HTMLDivElement> {}
-export const AppNav = ({ children }: AppNavProps) => {
-  return <StyledNav>{children}</StyledNav>;
+export const AppNav = (props: AppNavProps) => {
+  return <StyledNav>{props.children}</StyledNav>;
 };

@@ -1,0 +1,36 @@
+type Article {
+  author: String!
+  content: String!
+  id: ID!
+  publishedAt: DateTime!
+}
+
+type Book {
+  id: ID!
+  isbn: String!
+}
+
+scalar DateTime
+
+type Mutation {
+  insertArticle(content: String!): ID!
+  markBookAsRead(id: ID!): Book!
+  signInWithEmail(email: String!, password: String!): Session!
+  updateArticle(content: String!, id: ID!): ID!
+}
+
+type Query {
+  book(id: ID!): Book
+  me: User!
+  selectArticle(id: ID!): Article!
+}
+
+type Session {
+  id: ID!
+}
+
+type User {
+  fullName: String!
+  id: ID!
+  isAdmin: Boolean!
+}

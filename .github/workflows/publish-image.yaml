@@ -1,0 +1,38 @@
+name: Publish image
+
+on:
+  push:
+    tags:
+      - 'v*.*.*' 
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+  
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v26
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish wissen-frontend to ghcr
+        env:
+          REPOSITORY_URL: ghcr.io/${{ github.repository }}
+          REPOSITORY_USERNAME: ${{ github.actor }}
+          REPOSITORY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: nix run .#wissenFrontend.push 
+      - name: Publish wissen-backend to ghcr
+        env:
+          REPOSITORY_URL: ghcr.io/${{ github.repository }}
+          REPOSITORY_USERNAME: ${{ github.actor }}
+          REPOSITORY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: nix run .#wissenBackend.push 
+      - name: Publish ionica to ghcr
+        env:
+          REPOSITORY_URL: ghcr.io/${{ github.repository }}
+          REPOSITORY_USERNAME: ${{ github.actor }}
+          REPOSITORY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: nix run .#ionica.push 

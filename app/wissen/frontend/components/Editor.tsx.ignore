@@ -1,0 +1,77 @@
+import { createSignal, onCleanup, createEffect, type JSX } from 'solid-js';
+import { EditorView } from 'prosemirror-view';
+import { EditorState } from 'prosemirror-state';
+import { schema, defaultMarkdownParser, defaultMarkdownSerializer } from 'prosemirror-markdown';
+import { exampleSetup } from 'prosemirror-example-setup';
+
+// Define ProseMirrorView as a SolidJS component
+export const ProseMirrorView = (props: { content: string }) => {
+  let editorRef: JSX.IntrinsicElements['div'] | undefined;
+  let view: EditorView | undefined;
+
+  createEffect(() => {
+    if (editorRef) {
+      view = new EditorView(editorRef, {
+        state: EditorState.create({
+          doc: defaultMarkdownParser.parse(props.content),
+          plugins: exampleSetup({ schema }),
+        }),
+      });
+    }
+  });
+
+  onCleanup(() => {
+    view?.destroy();
+  });
+
+  return (
+    <div>
+      <div ref={editorRef} />
+    </div>
+  );
+};
+
+// Main App component
+export default function App() {
+  const [currentView, setCurrentView] = createSignal<'markdown' | 'prose' | null>(null);
+  const [content, setContent] = createSignal<string>('');
+
+  createEffect(() => {
+    const handleChange = (event: Event) => {
+      const target = event.target;
+      if (target!.checked) {
+        setCurrentView(target.value === 'markdown' ? 'markdown' : 'prose');
+      }
+    };
+
+    document.querySelectorAll("input[type=radio]").forEach(button => {
+      button.addEventListener("change", handleChange);
+    });
+
+    onCleanup(() => {
+      document.querySelectorAll("input[type=radio]").forEach(button => {
+        button.removeEventListener("change", handleChange);
+      });
+    });
+  });
+
+  return (
+    <div>
+      <textarea
+        id="content"
+        onInput={(e) => setContent((e.target as HTMLTextAreaElement).value)}
+      />
+      <div>
+        <label>
+          <input type="radio" name="view" value="markdown" /> Markdown View
+        </label>
+        <label>
+          <input type="radio" name="view" value="prose" /> ProseMirror View
+        </label>
+      </div>
+      <div id="editor">
+        {currentView() === 'prose' && <ProseMirrorView content={content()} />}
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,26 @@
+# extend type Query {
+#   book(id: ID!): Book
+# }
+# extends type Query {
+#   verifySession(id: String!): Session!
+# }
+
+extend type Mutation {
+  signInWithEmail(email: String!, password: String!): Session!
+}
+type Session {
+  id: ID!
+}
+
+# export const typeDefinitions = /* GraphQL */ `
+#   input SignInWithPasswordInput {
+#     email: String!
+#     password: String!
+#   }
+#   type Session {
+#     sessionId: String!
+#   }
+#   type Mutation {
+#     signInWithPassword(input: SignInWithPasswordInput): Session!
+#   }
+# `;

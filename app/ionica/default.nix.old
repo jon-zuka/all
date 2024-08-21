@@ -1,0 +1,50 @@
+{ pkgs ? import <nixpkgs> { } }:
+let
+  pname = "ionica";
+  scope = "@jon-zuka";
+  version = "0.0.1";
+  src = pkgs.nix-gitignore.gitignoreSource [ ] ./.;
+  app = pkgs.buildNpmPackage {
+    # inherit pname scope version src;
+    # nativeBuildInputs = [ pkgs.nodejs ];
+    # npmDepsHash = "sha256-L91kCONK/JQj0U+g+kQE/rgdeJJ5Mv+TI9FlpYKMRCs=";
+
+    # buildPhase = ''
+    #   npm run build
+    # '';
+
+    # installPhase = ''
+    #   local -r packageOut="$out/lib/node_modules/$scope/$pname"
+    #   mkdir -p $packageOut
+
+    #   # COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+    #   # mv .next/standalone/* $packageOut
+    #   # mv .next/static $packageOut/.nest
+
+    #   # chmod +x $packageOut/server.js
+
+    #   # mkdir -p $out/bin
+    #   # ln -s $packageOut/server.js $out/bin/$pname
+    # '';
+    # meta = { mainProgram = pname; };
+  };
+  # image = pkgs.dockerTools.buildLayeredImage {
+  #   name = pname;
+  #   tag = version;
+  #   config.Env = [ "NODE_ENV=production" ];
+  #   config.Cmd =
+  #     [ (pkgs.lib.getExe pkgs.bun) (pkgs.lib.getExe app) pname ];i
+  #   contents = [ pkgs.bun app ];
+  # };
+in {
+  inherit app;
+  # image;
+  # push = pkgs.writeShellScriptBin "push-${pname}" ''
+  #   skopeo copy --insecure-policy \
+  #     --dest-creds="$REPOSITORY_USERNAME:$REPOSITORY_PASSWORD" \
+  #     "docker-archive:${image}" \
+  #     "docker://$REPOSITORY_URL/${pname}:${version}"
+  # '';
+}
+

@@ -7,9 +7,9 @@ export { StyledTypography as Typography };
 
 const Typography = (
   props: JSX.IntrinsicElements["p"] & {
-    color?: keyof DefaultTheme["colors"];
+    color?: string;
     active?: boolean;
-    align: CSSAttribute['textAlign']
+    align?: CSSAttribute['textAlign']
   }
 ) => {
   return (
@@ -18,11 +18,11 @@ const Typography = (
       classList={{
         active: props.active,
       }}
-    />
+    >{props.children}</p>
   );
 };
 
 const StyledTypography = styled(Typography)`
-  text-align: ${({ align }) => getColor(align)};
-  color: ${({ color }) => getColor(color)};
+  text-align: ${({ align = 'inherit' }) => align};
+  color: ${({ theme, color = 'text'}) => getColor(theme!, color)};
 `;

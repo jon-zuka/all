@@ -1,3 +1,5 @@
+import "./global.d.ts";
+
 export const theme = {
   colors: {
     primary: "#36a094",
@@ -21,7 +23,7 @@ export const theme = {
 export type Theme = typeof theme;
 export type ThemeColor = keyof Theme["colors"];
 
-export const getColor = (color?: string): string => {
+export const getColor = (theme: Theme, color?: string): string => {
   if (!color) {
     return "inherit";
   }

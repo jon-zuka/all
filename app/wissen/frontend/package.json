@@ -1,0 +1,36 @@
+{
+  "name": "@repo/wissen-frontend",
+  "version": "0.0.1-beta.1",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "preview": "NODE_ENV=production bun run --bun dist/server/index.mjs",
+    "generate": "graphql-codegen --config helpers/gql/codegen.config.ts",
+    "generate:watch": "graphql-codegen --watch --config helpers/gql/codegen.config.ts",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "elysia": "1.1.7",
+    "express": "^4.21.0",
+    "prosemirror-example-setup": "^1.2.3",
+    "prosemirror-markdown": "^1.13.0",
+    "prosemirror-schema-basic": "^1.2.3",
+    "prosemirror-state": "^1.4.3",
+    "prosemirror-view": "^1.34.2",
+    "solid-js": "^1.8.22",
+    "vike": "^0.4.191",
+    "vike-solid": "^0.7.2",
+    "vite": "^5.4.2"
+  },
+  "devDependencies": {
+    "@0no-co/graphqlsp": "^1.12.13",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@parcel/watcher": "^2.4.1",
+    "@types/bun": "^1.1.8",
+    "@types/express": "^4.17.21",
+    "graphql-codegen": "^0.4.0",
+    "typescript": "^5.5.4",
+    "vike-node": "^0.1.16"
+  }
+}

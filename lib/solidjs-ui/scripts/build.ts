@@ -9,55 +9,58 @@ import {
   IConfigFile,
 } from "@microsoft/api-extractor";
 
-import rootPackageJson from "../../../package.json";
-
-const tsconfigJson = {
+const distTsconfigJson = {
   "compilerOptions": {
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
+    jsxFactory: "h", 
+    // jsxFactory: "createSignal", // Adjust if needed based on SolidJS setup
+    minify: true,
+    jsxFragment: "Fragment",
   },
 }
 
 const distPackageJson = {
-  name: packageJson["name"].replace(/^@repo\//, "@repo/"),
+  name: packageJson["name"].replace(/^@repo\//, "@jon-zuka/"),
   version: packageJson["version"],
   type: "module",
   private: false,
-  peerDependencies: { "solid-js": rootPackageJson["dependencies"]["solid-js"] },
+  peerDependencies: { "solid-js": packageJson["devDependencies"]["solid-js"] },
   exports: {
     ".": {
-      import: "./main.jsx",
-      require: "./main.cjsx",
+      import: "./lib.jsx",
+      require: "./lib.cjsx",
     },
     "./css": "./assets/css/reset/tailwind-compact.css",
   },
   files: ["**/*"],
-  main: "./main.cjs",
-  module: "./main.js",
-  types: "./main.d.ts",
+  main: "./lib.cjs",
+  module: "./lib.js",
+  types: "./lib.d.ts",
 };
 
 const commonSettings = {
-  entryPoints: ["src/main.ts"],
-  outdir: "../../dist/solidjs-ui",
+  entryPoints: ["src/lib.ts"],
+  outdir: `./dist`,
   bundle: true,
   treeShaking: true,
   target: ["ES2022"],
-  external: ["solid-js"],
+  external: ["solid-js, solid-js/web"],
   jsx: "preserve",
-  jsxFactory: "createSignal", // Adjust if needed based on SolidJS setup
+  jsxFactory: "h", 
+  minify: false,
   jsxFragment: "Fragment",
-  jsxImportSource: "solid-js",
+  jsxImportSource: "solid-js"
+  
 } satisfies esbuild.BuildOptions;
 
 await emptyDir(commonSettings.outdir);
-await emptyDir("./dist");
+await emptyDir("./tmp");
 
 await esbuild.build({
   ...commonSettings,
   format: "esm",
   outExtension: { ".js": ".jsx" },
-
 });
 
 await esbuild.build({
@@ -73,7 +76,7 @@ await Bun.write(
 
 await Bun.write(
   `${commonSettings.outdir}/tsconfig.json`,
-  JSON.stringify(tsconfigJson, null, 2)
+  JSON.stringify(distTsconfigJson, null, 2)
 );
 
 await Bun.spawn({
@@ -88,11 +91,11 @@ const extractorConfigObject: IConfigFile = {
   compiler: {
     tsconfigFilePath: path.resolve(__dirname, "../tsconfig.json"), // Specify the path to your tsconfig.json
   },
-  mainEntryPointFilePath: "./dist/main.d.ts",
+  mainEntryPointFilePath: "./tmp/lib.d.ts",
   bundledPackages: ["solid-styled-components", "polished"],
   dtsRollup: {
     enabled: true,
-    untrimmedFilePath: `${commonSettings.outdir}/main.d.ts`,
+    untrimmedFilePath: `${commonSettings.outdir}/lib.d.ts`,
   },
   projectFolder: ".",
 };

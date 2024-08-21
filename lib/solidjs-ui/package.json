@@ -1,10 +1,10 @@
 {
   "name": "@repo/solidjs-ui",
-  "version": "0.0.10-beta.19",
+  "version": "0.0.3",
   "private": false,
   "type": "module",
   "exports": {
-    ".": "./src/main.ts",
+    ".": "./src/lib.ts",
     "./css": "./src/assets/css/reset/tailwind-compact.css"
   },
   "scripts": {
@@ -13,14 +13,22 @@
     "storybook": "CACHE_DIR=\"`pwd`/../../node_modules/.cache\" storybook dev -p 6006",
     "publish": "bun run build && bun run scripts/publish.ts"
   },
-  "files": ["src/**/*"],
-  "devDependencies": {
-    "vite": "^5.4.0",
-    "vite-plugin-solid": "^2.10.2"
-  },
+  "files": [
+    "src/**/*"
+  ],
   "dependencies": {
     "polished": "^4.3.1",
     "solid-styled-components": "^0.28.5"
   },
-  "types": "./src/global.d.ts"
+  "devDependencies": {
+    "@microsoft/api-extractor": "^7.47.6",
+    "@types/fs-extra": "^11.0.4",
+    "esbuild": "^0.23.1",
+    "fs-extra": "^11.2.0",
+    "solid-js": "^1.8.21",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.0",
+    "vite-plugin-solid": "^2.10.2"
+  },
+  "types": "./src/lib.ts"
 }

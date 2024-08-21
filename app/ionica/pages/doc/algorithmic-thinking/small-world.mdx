@@ -1,0 +1,53 @@
+# Small World
+
+Sometimes we hear the phrase `The World is small`. It means that people know
+each other directly, or by just a few connections. A similar situation can
+occur in computer networks. We can ask how many connections are between two
+nodes.
+
+The `Small World` phenomena can help us answer many questions. For example,
+we can analyze the spread of an infection by analyzing the connections of
+humans.
+
+
+## 1. Problem 1: Is freindship transitive?
+
+1.1. Identify the problem from a domain expert.
+  > A social scientist may ask if friendship has a transitive property.
+  In other words, if person A is friends with person B, and person B is friends with person C,
+  is person A also freinds with person C?
+
+1.2. Model the input and output
+  > We can model the input as a graph. The nodes being the user accounts and the edges
+  representing friendship relations. The output should be a scalar `q` that quantifies
+  the transitivity.
+
+  ```mermaid
+  graph LR;
+      0 --- 1 --- 2;
+      3 --- 4;
+  ```
+
+| node | node | distance |
+| ---  | ---  | ---      |
+|    0 |    1 |        1 |
+|    0 |    2 |        2 |
+|    0 |    3 |      inf |
+|    0 |    4 |      inf |
+|    1 |    0 |        1 |
+|    1 |    2 |        1 |
+|    1 |    3 |      inf |
+
+... and so on.
+  
+1.3. Design the algorithm
+  > Pseudo-code is a simplified, language-agnostic way to describe an
+  algorithm's logic.
+
+  $$
+  X \larr \text{smallest element of } L_{j}
+  $$
+
+1.4. Implement the algorithm
+
+1.5. Run the algorithm on the data and answer the original question

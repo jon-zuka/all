@@ -1,0 +1,84 @@
+# Identity
+
+## Setup
+
+import { Steps } from 'nextra/components'
+
+ 
+<Steps>
+###  GPG (GNU Privacy Guard)
+ 
+
+**1.1. Generate a GPG key pair**
+
+```sh
+gpg --full-generate-key
+```
+
+**1.2 Inspect generated pairs**
+
+```sh
+gpg --list-secret-keys --keyid-format=long
+```
+Select the key ID you want to use, for example: `3AA5C34371567BD2`. It is found
+in the `sec` row.
+
+**1.3 Generate the GPG public key.**
+
+```sh
+gpg --armor --export 1B73CE78C751A653
+```
+
+**1.4 Add the GPG key to your GitHub account.**
+
+### SSH-key
+
+```sh
+ssh-keygen -t ed25519 -C "alice@example.com" -f ~/.ssh/id_ed25519_alice
+ssh-keygen -t ed25519 -C "bob@example.com" -f ~/.ssh/id_ed25519_bob
+```
+
+### home-manager
+
+If under `~/dev/alice` Alice's configuration is loaded. If under `~/dev/bob`,
+Bob's configuration is loaded.
+
+```nix
+{
+  enable = true;
+  lfs = { enable = true; }; # skip downloading large files
+  extraConfig = {
+    user.useConfigOnly = true;
+    init.defaultBranch = "main";
+    gpg = { program = "gpg2"; };
+    commit.gpgsign = "true";
+    pull.rebase = "false";
+  };
+  includes = [
+    {
+      contents = {
+        user = {
+          name = "alice";
+          email = "123455+alice@users.noreply.github.com";
+          signingkey = "ABCDEFG123456788";
+        };
+        core = { sshCommand = "ssh -i ~/.ssh/id_ed25519_alice"; };
+      };
+      condition = "gitdir:~/dev/alice/**";
+    }
+    {
+      contents = {
+        user = {
+          name = "bob";
+          email = "123456+bob@users.noreply.github.com";
+          signingkey = "ABCDEFG123456789";
+        };
+        core = { sshCommand = "ssh -i ~/.ssh/id_ed25519_bob"; };
+      };
+      condition = "gitdir:~/dev/bob/**";
+    }
+  ];
+}
+```
+
+</Steps>

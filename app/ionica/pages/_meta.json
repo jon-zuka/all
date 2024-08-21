@@ -1,0 +1,24 @@
+{
+  "index": {
+    "title": "About",
+    "type": "page"
+  },
+  "doc": {
+    "title": "Doc",
+    "type": "page"
+  },
+  "project": {
+    "title": "Project",
+    "type": "page"
+  },
+  "resource": {
+    "title": "Resource",
+    "type": "page"
+  },
+  "contact": {
+    "title": "Contact ↗",
+    "type": "page",
+    "href": "https://twitter.com/jon_codewolf",
+    "newWindow": true
+  }
+}

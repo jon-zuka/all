@@ -12,6 +12,7 @@ export type InputProps = Omit<
   placeholder?: string;
   color: ThemeColor;
   password?: boolean;
+  error: string;
   onChange: (value: string) => any;
 };
 
@@ -22,35 +23,45 @@ const Input: Component<InputProps> = (props) => {
     "placeholder",
     "label",
     "color",
-    "password"
+    "password",
+    "error"
   ]);
   return (
-    <StyledLabel {...rest} color={split.color}>
+    <StyledLabel {...rest} color={split.error ? 'danger' : split.color}>
       <input
         type={split.password ? "password" : "text"}
         value={split.value}
         placeholder={split.placeholder ?? split.label}
         onChange={(e) => split.onChange(e.target.value)}
       />
+      <p class="error">{split.error}</p>
     </StyledLabel>
   );
 };
 
 const StyledLabel = styled("label")`
-  width: 100%;
-  display: flex;
-  overflow: hidden;
-  border: 1px solid ${({ color }) => getColor(color)};
-  color: ${({ color }) => getColor(color)};
-  background-color: transparent;
-  padding: 0.6rem 1rem;
-  box-sizing: border-box;
-  border-radius: ${({ theme }) => getColor(theme?.shapes.bevel)};
-  position: relative;
-
+  /* width: 100%; */
+  /* display: flex; */
+  /* overflow: hidden; */
+  /* background-color: transparent; */
+  /* box-sizing: border-box; */
+  /* position: relative; */
+  /* display: flex; */
+  /* min-height: 4rem; */
+  .error {
+    text-align: left;
+    min-height: 1.2rem;
+    margin-top: .3rem;
+    font-size: .8rem;
+  }
+  
+  color: ${({ theme, color }) => getColor(theme!, color)};
   input {
+    border-radius: ${({ theme }) => getColor(theme!, theme?.shapes.bevel)};
+    border: 1px solid ${({theme,  color }) => getColor(theme!, color)};
+    padding: 0.6rem 1rem;
     &::placeholder {
-      color: ${({ color }) => getColor(color)};
+      color: ${({ theme, color }) => getColor(theme!, color)};
       opacity: 0.5;
     }
     min-width: min-content;
@@ -59,7 +70,7 @@ const StyledLabel = styled("label")`
     width: 100%;
     background-color: transparent;
     outline: none;
-    border: none;
+    /* border: none; */
     resize: none;
   }
   & > span {

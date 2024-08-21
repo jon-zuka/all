@@ -1,0 +1,15 @@
+extend type Mutation {
+  updateArticle(id: ID!, content: String!): ID!
+  insertArticle(content: String!): ID!
+}
+
+extend type Query {
+  selectArticle(id: ID!): Article!
+}
+
+type Article {
+  id: ID!,
+  content: String!
+  publishedAt: DateTime!
+  author: String!
+}

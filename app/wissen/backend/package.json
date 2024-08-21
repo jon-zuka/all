@@ -1,0 +1,31 @@
+{
+  "name": "@repo/server",
+  "version": "0.0.1",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "start": "bun run src/main.ts",
+    "build": "bun run build.ts",
+    "dev": "bun run --preload ./src/instrumentation.ts --watch src/main.ts",
+    "generate": "drizzle-kit --config ./src/db/drizzle.config.ts generate",
+    "migrate": "drizzle-kit --config ./src/db/drizzle.config.ts migrate",
+    "push": "drizzle-kit --config ./src/db/drizzle.config.ts push",
+    "graphql:generate": "graphql-codegen"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.9.5",
+    "@sinclair/typebox": "^0.33.4",
+    "drizzle-typebox": "^0.1.1",
+    "graphql-yoga": "^5.6.3"
+  },
+  "peerDependencies": {
+    "@types/bun": "^1.1.6",
+    "prettier": "^3.3.3"
+  },
+  "devDependencies": {
+    "@eddeee888/gcg-typescript-resolver-files": "^0.10.4",
+    "@graphql-codegen/cli": "^5.0.2",
+    "drizzle-kit": "^0.24.2",
+    "graphql-scalars": "^1.23.0"
+  }
+}

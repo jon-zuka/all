@@ -1,0 +1,73 @@
+# Introduction
+
+Thix Nix Language is used to write expressions that produce derivations.
+
+## 1. Installation
+
+```sh
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+```
+
+## 2. Basic
+
+### 2.1. Escape character
+
+Inside quoutes use backslash to escape a character. Inside double-single-quotes
+use double-single-quote to escape. Example:
+
+```nix
+"\${foo}" #> ${foo}
+''''${foo}'' #> ${foo}
+```
+
+### 2.2 Let expression
+
+```nix
+let a = 3; b = a + 2 in b #> 5
+```
+
+### 2.3 Function
+
+```nix
+# single parameter 
+triple = x: x * 3
+triple 3 #> 9
+
+# multiple parameters
+sum = x: y: x + y
+sum 2 3 #> 5
+
+# argument set
+sum = s: s.a + s.b
+sum { a = 2; b = 3; } #> 5
+
+# pattern match
+sum = { a, b }: a + b
+sum { a = 2; b = 3 } #> 5
+
+# default value
+sum = { a, b ? 2 }: a + b
+sum { a = 3; } #> 5
+
+# undefined number of attributes (variadic)
+sum = s@{ a, b, ... }: a + b + s.c
+sum { a = 1; b = 2; c = 3; } #> 6
+
+```
+
+### 2.4 Import
+
+```nix filename="triple.nix"
+x: x * 3
+```
+
+```nix
+import ./tiple.nix 2 #> 6
+```
+
+## 3. Derivation
+
+```sh filename="builder.sh"
+declare -xp
+echo foo > $out
+```

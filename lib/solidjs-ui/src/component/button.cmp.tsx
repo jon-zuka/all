@@ -10,7 +10,7 @@ const Button = (
     variant?: "outlined" | "contained" | "text";
     loading?: boolean;
     loadingComponent?: JSX.Element;
-    fullWidth?: boolean
+    fullWidth?: boolean;
   }
 ) => {
   const [split, rest] = splitProps(props, [
@@ -20,7 +20,7 @@ const Button = (
     "variant",
     "loading",
     "loadingComponent",
-    "fullWidth"
+    "fullWidth",
   ]);
   return (
     <button
@@ -41,24 +41,36 @@ const Button = (
 
 const css = String.raw;
 const StyledButton = styled(Button)`
-  ${({ theme, color = 'text' }) => css`
+  ${({ theme, color = "inherit" }) => css`
+    height: 36px;
     transition: background-color 0.4s;
     cursor: pointer;
     background-color: transparent;
     border-radius: ${theme?.shapes.bevel};
-    outline: 0.08rem solid;
-    padding: 0 1rem;
-    grid-column: span 1;
-    outline-color: ${getColor(color)};
-    color: ${getColor(color!)};
-    height: 36px;
-    &.contained {
-      background-color: ${getColor(color)};
-      color: ${readableColor(getColor(color))};
-      outline-color: none;
-      outline-color: ${getColor(color)};
+    &.outlined {
+      outline: 0.08rem solid;
+      padding: 0 1rem;
       &:hover {
-        background-color: ${rgba(getColor(color), 0.8)};
+        background-color: ${rgba(getColor(theme!, color), 0.2)};
+      }
+    }
+    grid-column: span 1;
+    outline-color: ${getColor(theme!, color)};
+    color: ${getColor(theme!, color!)};
+    &.text {
+      color: ${rgba(getColor(theme!, color), 0.8)};
+      height: auto;
+      &:hover {
+        color: ${rgba(getColor(theme!, color), 1)};
+      }
+    }
+    &.contained {
+      background-color: ${rgba(getColor(theme!, color), 0.8)};
+      color: ${readableColor(getColor(theme!, color))};
+      outline-color: none;
+      outline-color: ${getColor(theme!, color)};
+      &:hover {
+        background-color: ${rgba(getColor(theme!, color), 1)};
       }
     }
     &.full-width {
@@ -69,10 +81,7 @@ const StyledButton = styled(Button)`
       opacity: 0.8;
     }
     &.disabled.active {
-      background-color: ${rgba(getColor(color), 0.1)};
-    }
-    &:hover {
-      background-color: ${rgba(getColor(color), 0.2)};
+      background-color: ${rgba(getColor(theme!, color), 0.1)};
     }
   `}
 `;
